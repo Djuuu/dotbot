@@ -54,7 +54,10 @@ class Shell(dotbot.Plugin):
                     self._log.lowinfo('%s' % msg)
                 else:
                     self._log.lowinfo('%s [%s]' % (msg, cmd))
-                executable = os.environ.get('SHELL')
+
+                # executable = os.environ.get('SHELL') # Default - use current $SHELL
+                executable = None;                     # Windows / MSYS  compatibility
+
                 ret = subprocess.call(cmd, shell=True, stdin=stdin, stdout=stdout,
                     stderr=stderr, cwd=self._context.base_directory(),
                     executable=executable)

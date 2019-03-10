@@ -97,13 +97,17 @@ class Link(dotbot.Plugin):
         return success
 
     def _test_success(self, command):
+
+        # executable = os.environ.get('SHELL') # Default - use current $SHELL
+        executable = None;                     # Windows / MSYS  compatibility
+
         with open(os.devnull, 'w') as devnull:
             ret = subprocess.call(
                 command,
                 shell=True,
                 stdout=devnull,
                 stderr=devnull,
-                executable=os.environ.get('SHELL'),
+                executable=executable
             )
         if ret != 0:
             self._log.debug('Test \'%s\' returned false' % command)
